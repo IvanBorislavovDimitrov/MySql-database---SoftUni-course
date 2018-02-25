@@ -1,0 +1,12 @@
+UPDATE problems AS p 
+join contests as con on con.id = p.contest_id
+join categories as cat on cat.id = con.category_id
+join submissions as sub on sub.problem_id = p.id
+SET 
+    p.tests = case 
+    WHEN p.id % 3 = 0 then length(cat.name)
+    when p.id % 3 = 1 then (select sum(s.id) from submissions as s where s.problem_id=p.id)
+    when p.id % 3 = 2 then length(con.name)
+    end
+WHERE
+    p.tests = 0;

@@ -1,0 +1,4 @@
+select m.content, m.sent_on from messages as m
+where m.sent_on > '2014-05-12'
+and m.content like ('%just%')
+order by m.id desc;

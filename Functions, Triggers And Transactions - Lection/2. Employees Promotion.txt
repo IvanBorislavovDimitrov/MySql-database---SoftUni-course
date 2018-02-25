@@ -1,0 +1,12 @@
+delimiter $$
+create PROCEDURE usp_raise_salaries(
+department_name varchar(50))
+begin   
+    update departments as d join employees as e 
+    on d.department_id = e.department_id
+    set e.salary = e.salary * 1.05
+    where d.name = department_name;
+end 
+delimiter ;
+
+call usp_raise_salaries('finance');

@@ -1,0 +1,9 @@
+create procedure usp_deposit_money(account_id int, money_amount decimal(19,4))
+begin
+	start transaction;
+	if (money_amount < 0) then rollback;
+    else 
+		update accounts set balance = balance + money_amount where id = account_id;
+
+	end if;
+end

@@ -1,0 +1,19 @@
+create TRIGGER tr_update 
+BEFORE UPDATE on flights FOR EACH ROW 
+begin
+	
+    IF(old.`status` = 'Departing' OR old.`status` = 'Delayed') then
+		
+        insert into arrived_flights(flight_id, arrival_time, origin, destination, passengers)
+        values (
+			new.flight_id,
+            new.arrival_time,
+            (select a.airport_name from airports as a join flights as f on f.origin_airport_id = a.airport_id 
+							and new.flight_id = f.flight_id),
+            (select a.airport_name from airports as a join flights as f on f.destination_airport_id = a.airport_id
+							and new.flight_id = f.flight_id),
+            (select count(t.ticket_id) from flights as f join tickets as t on t.flight_id = f.flight_id
+            where new.flight_id = f.flight_id)
+        );
+	end if;
+end

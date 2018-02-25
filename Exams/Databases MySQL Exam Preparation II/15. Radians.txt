@@ -1,0 +1,10 @@
+delimiter $$
+create function udf_get_radians(degrees float)
+returns float
+begin 
+	return degrees * pi() / 180;
+end $$
+delimiter ;
+
+SELECT udf_get_radians(22.12);
+

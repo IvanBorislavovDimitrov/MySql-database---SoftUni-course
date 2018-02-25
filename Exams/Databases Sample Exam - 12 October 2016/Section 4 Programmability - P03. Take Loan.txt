@@ -1,0 +1,17 @@
+delimiter $$
+
+create procedure usp_take_loan(customer_id int, loan_amount decimal(10,2),
+						interest decimal(10,2), start_date date)
+begin
+	
+	start transaction;
+    if (loan_amount not between 0.01 AND 100000) then
+		rollback;
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid Loan Amount.';
+	else 
+		insert into loans (start_date, amount, interest, customer_id)
+        values(start_date, loan_amount, interest, customer_id);
+        commit;
+	end if;
+end $$
+delimiter ;

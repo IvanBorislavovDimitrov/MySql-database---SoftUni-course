@@ -1,0 +1,21 @@
+SELECT 
+    CONCAT(e.first_name, ' ', e.last_name) AS name,
+    
+    
+	concat((select cast(count(r.id) as char) from reports as r
+    where r.employee_id = e.id and year(r.close_date) = 2016), '/',
+
+    (select cast(count(r.id) as char) from reports as r where e.id = r.employee_id and
+    year(r.open_date) = 2016 and (year(r.close_date) >= 2016 or r.close_date is null))) as 'col1'
+    
+FROM
+    employees AS e
+        JOIN
+    reports AS r ON r.employee_id = e.id
+    where (select count(r.id) from reports as r
+    where r.employee_id = e.id and year(r.close_date) = 2016) != 0 OR
+
+    (select count(r.id) from reports as r where e.id = r.employee_id and
+    year(r.open_date) = 2016 and (year(r.close_date) > 2016 or r.close_date is null)) != 0
+    group by e.id
+ORDER BY name;

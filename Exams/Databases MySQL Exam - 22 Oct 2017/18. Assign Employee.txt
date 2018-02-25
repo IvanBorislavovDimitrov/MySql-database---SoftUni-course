@@ -1,0 +1,33 @@
+delimiter $$
+create procedure usp_assign_employee_to_report(employee_id INT, report_id INT)
+begin
+        	start transaction;
+    if (employee_id not in (select r.employee_id from reports as r
+                            where r.id = report_id))
+	THEN 
+		 select 'Employee doesn\'t belong to the appropriate department!';
+    ROLLBACK;
+    ELSE 
+		update reports as r set r.employee_id = employee_id
+        where r.id = report_id;
+        commit;
+	END IF;
+end $$
+delimiter ;
+
+drop procedure usp_assign_employee_to_report;
+
+CALL usp_assign_employee_to_report(17, 2);
+SELECT employee_id FROM reports WHERE id = 2;
+
+CALL usp_assign_employee_to_report(30, 1);
+SELECT employee_id FROM reports WHERE id = 2;
+
+call usp_assign_employee_to_report(1, 36);
+
+call usp_assign_employee_to_report(1, 1);
+
+SELECT Employee_Id
+FROM Reports
+WHERE Id = 36;
+

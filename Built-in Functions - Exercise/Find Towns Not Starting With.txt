@@ -1,0 +1,8 @@
+SELECT 
+    *
+FROM
+    towns
+WHERE
+		NOT (SUBSTRING(`name`, 1, 1) ='R')
+        AND NOT (SUBSTRING(`name`, 1, 1) = 'B')
+        AND NOT (SUBSTRING(`name`, 1, 1) = 'D') ORDER BY `name` ASC;

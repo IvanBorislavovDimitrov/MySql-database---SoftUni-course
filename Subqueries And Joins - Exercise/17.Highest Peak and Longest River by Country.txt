@@ -1,0 +1,19 @@
+SELECT 
+    c.country_name,
+    MAX(p.elevation) AS `hi_pe`,
+    MAX(r.length) AS `lo_ri`
+FROM
+    countries AS c
+        JOIN
+    mountains_countries AS mc ON mc.country_code = c.country_code
+        JOIN
+    mountains AS m ON m.id = mc.mountain_id
+        JOIN
+    peaks AS p ON p.mountain_id = m.id
+        JOIN
+    countries_rivers AS cr ON cr.country_code = c.country_code
+        JOIN
+    rivers AS r ON r.id = cr.river_id
+GROUP BY country_name
+ORDER BY p.elevation DESC , r.length DESC
+LIMIT 5;

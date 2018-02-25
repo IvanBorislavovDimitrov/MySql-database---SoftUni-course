@@ -1,0 +1,10 @@
+(select e.first_name, c.city_name from employees as e 
+join branches as b on b.branch_id = e.branch_id
+join cities as c on c.city_id = b.city_id
+limit 3)
+
+UNION
+
+(select c1.first_name , ci.city_name from customers as c1
+join cities as ci on ci.city_id = c1.city_id
+limit 3)

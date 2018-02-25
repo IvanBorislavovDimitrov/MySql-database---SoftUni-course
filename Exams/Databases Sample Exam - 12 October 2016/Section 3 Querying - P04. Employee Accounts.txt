@@ -1,0 +1,6 @@
+select e.employee_id, e.first_name, a.account_number from employees as e 
+join employees_accounts as ea on ea.employee_id = e.employee_id
+join accounts as a on a.account_id = ea.account_id
+where year(a.start_date) > 2012
+order by e.first_name desc 
+limit 5;

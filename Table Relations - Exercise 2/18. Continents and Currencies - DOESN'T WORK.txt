@@ -1,0 +1,16 @@
+SELECT 
+    c.continent_code, 
+    (select cur.currency_code from (select count(currency_code) from currencies as cr
+    join countries as cou on cr.currency_code = cou.currency_code
+    order by count(cr.currency_code) desc limit 1) as `first_select`) as `second_select`,
+    
+    (select count(currency_code) from currencies as cur
+    order by count(cur.currency_code) desc limit 1) as `third`
+FROM
+    continents AS c
+        JOIN
+    countries AS cou ON c.continent_code = cou.continent_code
+        JOIN
+    currencies AS cur ON cur.currency_code = cou.currency_code
+GROUP BY c.continent_code
+order by c.continent_code asc;

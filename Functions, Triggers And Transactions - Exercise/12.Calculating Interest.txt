@@ -1,0 +1,21 @@
+delimiter $$
+CREATE FUNCTION ufn_calculate_future_value (initial_sum DECIMAL(19, 4),yearly_interest_rate DECIMAL(19, 4), number_of_years DECIMAL(19, 4))
+RETURNS DECIMAL(19, 4)
+BEGIN
+DECLARE future_value DECIMAL(19, 4);
+SET future_value :=(initial_sum * (pow((1 + yearly_interest_rate), number_of_years)));
+RETURN future_value;
+END $$
+delimiter ;
+
+delimiter $$
+
+create procedure usp_calculate_future_value_for_account(account_id int, interest_rate decimal(19,4))
+begin
+	select a.id, ah.first_name, ah.last_name, a.balance,
+	round(ufn_calculate_future_value(a.balance, interest_rate, 5), 4) as '5 years'
+    from accounts as a
+    inner join account_holders as ah on a.account_holder_id=ah.id
+    where a.id = account_id;
+end $$
+delimiter ;

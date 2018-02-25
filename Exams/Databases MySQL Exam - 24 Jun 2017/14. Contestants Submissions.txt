@@ -1,0 +1,6 @@
+select c.id, c.name, COUNT(*) from contests as c
+join problems as p on p.contest_id = c.id
+join submissions as s on s.problem_id = p.id
+where s.user_id in (select uc.user_id from users_contests as uc where uc.contest_id = c.id)
+group by c.id
+ORDER BY count(*) desc, c.id;

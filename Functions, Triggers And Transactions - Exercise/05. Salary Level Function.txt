@@ -1,0 +1,25 @@
+delimiter $$
+CREATE FUNCTION ufn_get_salary_level (salary decimal(19,4))
+RETURNS varchar(10) 
+BEGIN
+	DECLARE str varchar(50);
+	set str := '';
+	set str := (
+		case 
+			when (salary < 30000) then
+				'Low'
+			when (salary BETWEEN 30000 and 50000) then
+				'Average'
+			when (salary > 50000) then
+				'High'
+	end);
+    
+	RETURN str;
+    
+END $$
+delimiter ;
+
+drop FUNCTION ufn_get_salary_level;
+
+select e.salary, ufn_get_salary_level (e.salary) from employees as e;
+

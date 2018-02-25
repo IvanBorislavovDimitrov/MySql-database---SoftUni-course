@@ -1,0 +1,8 @@
+UPDATE employees as e 
+set Manager_ID = 	
+	case
+		when employee_id BETWEEN 2 and 10 then 1
+        when employee_id between 12 and 20 then 11
+        when employee_id BETWEEN 22 and 30 then 21
+        when employee_id = 11 or employee_id = 21 then 1
+	end;

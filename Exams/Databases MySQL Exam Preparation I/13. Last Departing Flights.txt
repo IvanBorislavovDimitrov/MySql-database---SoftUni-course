@@ -1,0 +1,17 @@
+select * from (
+
+select f.flight_id, f.departure_time, f.arrival_time,
+
+ (select a1.airport_name from airports as a1 
+join flights as f1 on f1.origin_airport_id = a1.airport_id
+ where f1.flight_id =f.flight_id) as 'origin',
+
+(select a1.airport_name from airports as a1 
+join flights as f1 on f1.destination_airport_id = a1.airport_id
+ where f1.flight_id =f.flight_id) as `destination`
+ 
+ from flights as f
+where f.status = 'Departing'
+order by f.departure_time desc 
+limit 5) as `last`
+order by `last`.departure_time asc;

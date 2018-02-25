@@ -1,0 +1,25 @@
+
+
+CREATE TABLE customer_bank_accounts(
+	account_id INT AUTO_INCREMENT,
+	account_number VARCHAR(10) UNIQUE NOT NULL,
+	balance DECIMAL(10, 2) NOT NULL,
+	customer_id INT,
+	CONSTRAINT pk_customer_bank_accounts PRIMARY KEY(account_id),
+	CONSTRAINT fk_customer_bank_accounts_customers FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+
+delimiter $$
+
+create procedure udp_purchase_ticket(customer_id int, flight_id int, ticket_price decimal(10, 4), class varchar(10), seat varchar(10))
+begin 
+	insert into tickets(ticket_id, price, class, seat, customer_id, flight_id)
+    values (null, ticket_price, class, seat, customer_id, flight_id);
+    
+    update customer_bank_accounts as cba set cba.balance = cba.balance - ticket_price where cba.customer_id = customer_id;
+end $$
+
+delimiter ;
+
+

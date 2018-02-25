@@ -1,0 +1,15 @@
+CREATE TABLE people (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(200) NOT NULL,
+	picture BLOB,
+	height DECIMAL(4,2),
+	weight DECIMAL(4,2),
+	gender ENUM('m','f') NOT NULL,
+	birthdate DATE NOT NULL,
+	biography TEXT
+);
+
+INSERT INTO people
+	(id, name, picture, height, weight, gender, birthdate, biography)
+	VALUES (NULL, '', NULL, 0, 0, 'f', NOW(), ''), (NULL, '', NULL, 0, 0, 'f', NOW(), ''), (NULL, '', NULL, 0, 0, 'f', NOW(), ''),
+	 (NULL, '', NULL, 0, 0, 'f', NOW(), ''), (NULL, '', NULL, 0, 0, 'f', NOW(), '');

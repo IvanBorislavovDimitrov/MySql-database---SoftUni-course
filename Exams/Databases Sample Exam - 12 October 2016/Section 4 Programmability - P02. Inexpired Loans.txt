@@ -1,0 +1,8 @@
+create procedure usp_customers_with_unexpired_loans(customer_id int)
+begin
+	
+	select c.customer_id, c.first_name, l.loan_id from customers as c
+    join loans as l on l.customer_id = c.customer_id
+    where c.customer_id = customer_id and l.expiration_date is null;
+
+end

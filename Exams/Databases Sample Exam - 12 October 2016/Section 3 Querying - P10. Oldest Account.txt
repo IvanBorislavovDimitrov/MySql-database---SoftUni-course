@@ -1,0 +1,4 @@
+select c.customer_id, c.first_name, a.start_date from customers as c
+join accounts as a on a.customer_id = c.customer_id
+order by a.start_date 
+limit 1;

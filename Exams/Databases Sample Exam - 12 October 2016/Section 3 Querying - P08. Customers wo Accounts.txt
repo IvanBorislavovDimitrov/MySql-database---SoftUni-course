@@ -1,0 +1,3 @@
+select c.customer_id, c.height from customers as c
+left join accounts as a on a.customer_id = c.customer_id
+where (c.height between 1.74 and 2.04) and a.account_id is null

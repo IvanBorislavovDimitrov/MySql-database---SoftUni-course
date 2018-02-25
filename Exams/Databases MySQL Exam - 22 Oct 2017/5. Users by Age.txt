@@ -1,0 +1,5 @@
+SELECT 
+    u.username, u.age
+FROM
+    users as u
+ORDER BY u.age , u.username DESC;

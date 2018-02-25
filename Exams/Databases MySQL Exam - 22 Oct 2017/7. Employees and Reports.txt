@@ -1,0 +1,7 @@
+SELECT 
+    e.first_name, e.last_name, r.description, DATE_format(r.open_date, '%Y-%m-%d')
+FROM
+    employees AS e
+        JOIN
+    reports AS r ON r.employee_id = e.id
+ORDER BY e.id , DATE(r.open_date) , r.id;

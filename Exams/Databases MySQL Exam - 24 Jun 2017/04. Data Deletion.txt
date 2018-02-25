@@ -1,0 +1,6 @@
+DELETE FROM users 
+WHERE
+    id NOT IN (SELECT 
+        user_id
+    FROM
+        users_contests)

@@ -1,0 +1,37 @@
+CREATE table evaluated_submissions (
+		id int primary key,
+    username VARCHAR(30) not null unique,
+    password varchar(30) not null,
+    email varchar(50)
+);
+
+delimiter $$
+create procedure udp_evaluate(id int)
+begin
+	if (id not in (select s.id from submissions as s)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Submission does not exist!';
+	end if;
+    
+	insert into evaluated_submissions
+    select id, 
+    
+    (select p.name from submissions as s
+    join problems as p on p.id = s.problem_id
+    where id = s.id),
+    
+    (SELECT u.username from problems as p
+    join submissions as s on s.problem_id = p.id
+    join users as u on u.id = s.user_id 
+    where id = s.id),
+    
+    (select ceil(p.points / p.tests * s.passed_tests) from problems as p
+    join submissions as s on s.problem_id = p.id
+    join users as u on u.id = s.user_id
+    where id = s.id) ;
+    
+end $$
+delimiter ;
+
+drop PROCEDURE udp_evaluate;
+
+call udp_evaluate(1);

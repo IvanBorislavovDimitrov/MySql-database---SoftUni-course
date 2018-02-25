@@ -1,0 +1,52 @@
+create table towns(
+	town_id int primary key,
+    town_name varchar(30) not null
+);
+
+create table airports(
+	airport_id int primary key,
+    airport_name varchar(50) not null,
+    town_id int,
+    constraint fk_airports_towns FOREIGN KEY (town_id) REFERENCES towns(town_id)
+);
+
+create table airlines(
+	airline_id int primary key,
+    airline_name VARCHAR(30) not null,
+    nationality varchar(30) not null,
+    rating int default 0
+);
+
+create table customers(
+	customer_id int primary key,
+    first_name VARCHAR(20) not null,
+    last_name varchar(20) not null,
+    date_of_birth date not null,
+    gender varchar(1),
+    home_town_id int,
+    constraint fk_customers_towns foreign key (home_town_id) references towns(town_id)
+);
+
+create table flights(
+	flight_id int primary key auto_increment,
+    departure_time datetime not null,
+    arrival_time datetime not null,
+    `status` varchar(9),
+    origin_airport_id int,
+    destination_airport_id int,
+    airline_id int,
+    constraint fk_flights_origin_airports foreign key (origin_airport_id) REFERENCES airports(airport_id),
+    constraint fk_flights_airport_airports foreign key (destination_airport_id) REFERENCES airports(airport_id),
+    constraint fk_flights_airlines foreign key (airline_id) references airlines(airline_id)
+);
+
+create table tickets (
+	ticket_id int primary key AUTO_INCREMENT,
+    price DECIMAL(8,2) not null,
+    class varchar(6),
+    seat varchar(5) not null,
+    customer_id int,
+    flight_id int,
+    constraint fk_tickets_customers FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    constraint fk_tickets_flights foreign key (flight_id) REFERENCES flights(flight_id)
+);

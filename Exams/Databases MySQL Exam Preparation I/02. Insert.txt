@@ -1,0 +1,17 @@
+insert into flights(flight_id, departure_time, arrival_time, `status`, origin_airport_id,
+destination_airport_id, airline_id)
+select null,
+'2017-06-19 14:00:00',
+'2017-06-21 11:00:00',
+case 
+	when a.airline_id % 4 = 0 then 'Departing'
+    when a.airline_id % 4 = 1 then 'Delayed'
+    when a.airline_id % 4 = 2 then 'Arrived'
+	when a.airline_id % 4 = 3 then 'Canceled'
+end,
+ceil(sqrt(char_length(a.airline_name))),
+ceil(sqrt(char_length(a.nationality))),
+a.airline_id
+
+from airlines as a
+where a.airline_id between 1 and 10;

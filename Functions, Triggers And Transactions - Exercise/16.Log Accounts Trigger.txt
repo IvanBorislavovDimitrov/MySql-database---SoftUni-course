@@ -1,0 +1,13 @@
+create table `logs` (
+	log_id int primary key auto_increment,
+    account_id int,
+    old_sum decimal(19, 4),
+    new_sum decimal(19, 4)
+);
+
+create trigger tr_updated_balances
+after update on accounts for each row
+begin
+	insert into `logs` (log_id, account_id, old_sum, new_sum)
+    values(null, old.id, old.balance, new.balance);
+end 

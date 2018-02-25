@@ -1,0 +1,8 @@
+SELECT 
+    con.id, con.name, SUM(p.points) AS `sum`
+FROM
+    problems AS p
+        JOIN
+    contests AS con ON con.id = p.contest_id
+GROUP BY con.id
+ORDER BY `sum` DESC;

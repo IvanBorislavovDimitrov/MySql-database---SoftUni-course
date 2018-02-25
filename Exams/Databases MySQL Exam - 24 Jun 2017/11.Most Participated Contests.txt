@@ -1,0 +1,13 @@
+SELECT 
+    *
+FROM
+    (SELECT 
+        c.id, c.name, COUNT(user_id) AS usercount
+    FROM
+          contests AS c
+    LEFT JOIN users_contests AS uc ON uc.contest_id = c.id
+    LEFT JOIN users AS u ON u.id = uc.user_id
+    GROUP BY uc.contest_id
+    ORDER BY COUNT(uc.user_id) DESC
+    LIMIT 5) AS top
+ORDER BY top.`usercount` ASC , top.`id`;

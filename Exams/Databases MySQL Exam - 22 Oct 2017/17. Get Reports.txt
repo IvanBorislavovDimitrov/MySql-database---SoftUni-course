@@ -1,0 +1,12 @@
+create function udf_get_reports_count(employee_id INT, status_id INT)
+returns int
+begin
+	declare count_reports int;
+	set count_reports = (SELECT 
+    COUNT(*)
+FROM
+    reports AS r
+WHERE
+    r.employee_id = employee_id AND r.status_id = status_id);	
+	return count_reports;
+end 

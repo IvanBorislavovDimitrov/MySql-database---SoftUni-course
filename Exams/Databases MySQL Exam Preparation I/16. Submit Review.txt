@@ -1,0 +1,39 @@
+CREATE TABLE customer_reviews(
+	review_id INT AUTO_INCREMENT,
+	review_content VARCHAR(255) NOT NULL,
+	review_grade INT NOT NULL,
+	airline_id INT,
+	customer_id INT,
+	CONSTRAINT pk_customer_reviews PRIMARY KEY(review_id),
+	CONSTRAINT fk_customer_reviews_airlines FOREIGN KEY(airline_id) REFERENCES airlines(airline_id),
+	CONSTRAINT fk_customer_reviews_customers FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE customer_bank_accounts(
+	account_id INT AUTO_INCREMENT,
+	account_number VARCHAR(10) UNIQUE NOT NULL,
+	balance DECIMAL(10, 2) NOT NULL,
+	customer_id INT,
+	CONSTRAINT pk_customer_bank_accounts PRIMARY KEY(account_id),
+	CONSTRAINT fk_customer_bank_accounts_customers FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+
+delimiter $$
+
+create procedure udp_submit_review(customer_id int, review_content varchar(255), review_grade int, airline_name varchar(100))
+begin 
+	if (airline_name not in (select a.airline_name from airlines as a))
+		then SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Airline does not exist.';
+	end if;
+    insert into customer_reviews
+    select null,
+    review_content,
+    review_grade,
+    (select a.airline_id from airlines as a where a.airline_name = airline_name),
+	customer_id;
+end $$
+
+delimiter ;
+
+

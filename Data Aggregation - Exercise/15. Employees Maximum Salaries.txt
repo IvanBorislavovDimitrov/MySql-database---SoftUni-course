@@ -1,0 +1,6 @@
+SELECT 
+    department_id, MAX(salary) AS `max`
+FROM
+    employees
+GROUP BY department_id
+HAVING `max` not between 30000 and 70000;

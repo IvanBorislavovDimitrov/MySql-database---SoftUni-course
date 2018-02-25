@@ -1,0 +1,12 @@
+SELECT 
+    e.employee_id, e.first_name
+FROM
+    employees AS e
+        LEFT JOIN
+    employees_projects AS ep ON ep.employee_id = e.employee_id
+        LEFT JOIN
+    projects AS p ON p.project_id = ep.project_id
+WHERE
+    p.project_id IS NULL
+ORDER BY e.employee_id DESC
+LIMIT 3;

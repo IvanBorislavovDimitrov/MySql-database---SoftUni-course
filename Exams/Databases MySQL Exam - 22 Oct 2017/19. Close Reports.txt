@@ -1,0 +1,10 @@
+delimiter $$
+create trigger enter_date
+before UPDATE on reports for each row
+begin 
+	if (old.close_date is null and new.close_date is not null)
+    THEN
+	set new.status_id = 3;
+    end if;
+end $$
+delimiter ;

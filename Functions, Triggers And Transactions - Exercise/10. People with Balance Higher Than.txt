@@ -1,0 +1,14 @@
+delimiter $$
+CREATE PROCEDURE usp_get_holders_with_balance_higher_than(param decimal(19, 4)) 
+BEGIN
+	select ah.first_name, ah.last_name from accounts as a
+join account_holders as ah on ah.id = a.account_holder_id
+group by ah.id
+having sum(a.balance) > param
+order by a.id, ah.first_name, ah.last_name;
+END $$
+delimiter ;
+
+call usp_get_holders_with_balance_higher_than(7000);
+
+drop procedure usp_get_holders_with_balance_higher_than;

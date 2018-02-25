@@ -1,0 +1,8 @@
+SELECT 
+    c.name, COUNT(*)
+FROM
+    categories AS c
+        JOIN
+    reports AS r ON r.category_id = c.id
+GROUP BY c.name
+ORDER BY COUNT(*) , c.name;

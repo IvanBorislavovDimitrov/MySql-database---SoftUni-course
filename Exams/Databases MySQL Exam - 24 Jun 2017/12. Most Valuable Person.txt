@@ -1,0 +1,8 @@
+select s.id, u.username, p.name, concat(s.passed_tests, ' / ', p.tests)
+from submissions as s 
+join users as u on u.id = s.user_id
+join problems as p on p.id = s.problem_id
+    
+where u.id = (select u.id from users as u join users_contests as uc on uc.user_id = u.id
+				group by u.id order by count(*) desc limit 1)
+order by s.id desc;

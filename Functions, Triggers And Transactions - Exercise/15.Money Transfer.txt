@@ -1,0 +1,22 @@
+create procedure
+ usp_transfer_money(from_account_id int, to_account_id int, amount decimal(19,4)) 
+begin
+	start transaction;
+    if ((select count(*) from accounts where id = from_account_id) != 1)
+		then rollback;
+	elseif (((select count(*) from accounts where id = to_account_id) != 1))
+		then rollback;
+    elseif (amount < 0)
+		then rollback;
+	elseif ((select balance from accounts where id = from_account_id)
+				- amount < 0)
+		then rollback;
+	else
+		update accounts as a set a.balance = a.balance - amount
+        where a.id = from_account_id;
+        
+		update accounts as a set a.balance = a.balance + amount
+        where a.id = to_account_id;
+    
+    end if;
+end

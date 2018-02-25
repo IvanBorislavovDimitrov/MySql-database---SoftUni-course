@@ -1,0 +1,14 @@
+SELECT DISTINCT
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name),
+    (year('2016-01-01') - year(c.date_of_birth)) as `years` 
+FROM
+    customers AS c
+        inner JOIN
+    tickets AS t ON t.customer_id = c.customer_id
+        inner JOIN
+    flights AS f ON f.flight_id = t.flight_id
+WHERE
+		(year('2016-01-01') - year(c.date_of_birth)) < 21 and
+		f.status = 'Arrived'
+order by (year('2016-01-01') - year(c.date_of_birth)) desc, c.customer_id;

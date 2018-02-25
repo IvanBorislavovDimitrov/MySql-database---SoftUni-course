@@ -1,0 +1,52 @@
+
+set foreign_key_checks = 0;
+
+insert into deposits	
+select 
+c.customer_id,
+case 
+	when c.date_of_birth > '1980-01-01' then
+		case 
+			when c.gender = 'M' then	
+				1100
+			else 
+				1200
+		end
+	when c.date_of_birth <= '1980-01-01' then
+		case 
+			when c.gender = 'M' then
+				1600
+			else 
+				1700
+		end 
+	end,
+date(now()),
+null,
+case 
+	when c.customer_id > 15 then 3
+	when c.customer_id % 2 = 1 then 1 
+    when c.customer_id % 2 = 0 then 2	
+end,
+c.customer_id
+ from customers as c
+where c.customer_id < 20;
+
+
+
+insert into deposit_types(Deposit_Type_ID, deposit_name)
+values (1, 'Time Deposit'),
+(2, 'Call Deposit'),
+(3, 'Free Deposit');
+
+
+insert into employees_deposits(employee_Id, deposit_Id)
+values (15, 4),
+(20, 15),
+(8, 7),
+(4, 8),
+(3, 13),
+(3, 8),
+(4, 10),
+(10, 1),
+(13, 4),
+(14, 9);

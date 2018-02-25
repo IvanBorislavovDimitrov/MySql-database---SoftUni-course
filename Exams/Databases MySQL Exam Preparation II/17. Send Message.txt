@@ -1,0 +1,25 @@
+delimiter $$
+create procedure udp_send_message(user_id int, chat_id int, content varchar(200))
+begin
+	select '101', content, '2016-12-15 00:00:00' as 'sent_on', chat_id, user_id
+    from users as u 
+    left join users_chats as uc on uc.chat_id = u.id
+	left join chats as c on c.id = uc.chat_id
+	left join messages as m on m.chat_id = c.id
+    where u.id = user_id;
+end $$
+delimiter ;
+
+CREATE PROCEDURE udp_send_message(in user_id int,in chat_id int,in content varchar(200))
+BEGIN
+start transaction;
+if (user_id not in(select us.user_id 
+                        from users_chats as us
+                        where us.chat_id=chat_id))            
+then signal sqlstate '45000' SET message_text='There is no chat with that user!';
+rollback;
+end if;
+insert into messages (content,sent_on,chat_id,user_id)
+values(content,'2016-12-15',chat_id,user_id);
+commit;
+END

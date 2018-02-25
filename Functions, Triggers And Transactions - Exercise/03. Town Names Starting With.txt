@@ -1,0 +1,12 @@
+delimiter $$
+create procedure usp_get_towns_starting_with(str varchar(50))
+begin
+	select t.name from towns as t
+    where t.name like (concat(str, '%'))
+    order by t.name;
+end $$
+delimiter ;
+
+drop procedure usp_get_towns_starting_with ;
+
+call usp_get_towns_starting_with('b');

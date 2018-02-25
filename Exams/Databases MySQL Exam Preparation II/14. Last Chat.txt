@@ -1,0 +1,5 @@
+SELECT c.title, m.content FROM messages AS m
+RIGHT JOIN chats AS c
+ON m.chat_id = c.id
+WHERE c.start_date = (SELECT MAX(c.start_date) FROM chats AS c)
+ORDER BY m.sent_on, m.id;

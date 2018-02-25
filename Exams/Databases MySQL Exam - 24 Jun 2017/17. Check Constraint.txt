@@ -1,0 +1,15 @@
+delimiter $$
+create TRIGGER tr_add_new
+BEFORE INSERT on problems FOR EACH ROW
+BEGIN
+	
+    if(new.name not like ('% %')) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The given name is invalid!';
+    elseif (new.points <= 0) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The problem’s points cannot be less or equal to 0!';
+	elseif (new.tests <= 0)  then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The problem’s tests cannot be less or equal to 0!';
+
+end if;
+end $$
+delimiter ;

@@ -1,0 +1,11 @@
+select
+substring(f.name,1, locate('.', f.name) - 1) as `fileName`,
+(select count(c1.id) from commits as c1 where c1.message like (concat('%', f.name, '%'))) as `recursive_count`
+from files as f 
+join files as f1 on f.id = f1.parent_id
+where f.parent_id = f1.id and f.id != f1.id
+ORDER BY `fileName`;
+
+select * from files as f
+join files as f1 on f.id = f1.parent_id and f1.parent_id = f.id
+where f.name like ('%find%') or f.name like ('%register%');

@@ -1,0 +1,27 @@
+delimiter $$
+create procedure udp_commit(username varchar(5000), `password` varchar(5000), message varchar(5000), issue_id int)
+begin
+	if (username not in (select u.username from users as u)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No such user!';
+	elseif (`password` not like (select u.password from users as u where u.username = username)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password is incorrect!';
+	elseif (issue_id not in (select i.id from issues as i)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The issue does not exist!';
+	else
+		insert into commits
+        select null,
+        message,
+        issue_id,
+        (select i.repository_id from issues as i where i.id = issue_id),
+        (select u.id from users as u where u.username = username);
+		
+        update issues as i set i.issue_status = 'closed'
+        where i.id = issue_id;
+
+    end if;
+end $$
+delimiter ;
+
+call udp_commit ('whodenotebel', 'ajmisqi*', 'fixed issue : invalid welcoming message in read.html', 2);
+drop PROCEDURE udp_commit;
+

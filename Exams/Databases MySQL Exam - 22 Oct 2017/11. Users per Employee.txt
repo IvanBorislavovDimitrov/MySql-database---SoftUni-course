@@ -1,0 +1,10 @@
+SELECT 
+    CONCAT(e.first_name, ' ', e.last_name), COUNT(*)
+FROM
+    employees AS e
+        JOIN
+    reports AS r ON r.employee_id = e.id
+        JOIN
+    users AS u ON r.user_id = u.id
+GROUP BY e.id
+ORDER BY COUNT(*) DESC , u.name;

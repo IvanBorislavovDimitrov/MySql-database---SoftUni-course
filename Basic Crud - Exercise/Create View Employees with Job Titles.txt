@@ -1,0 +1,4 @@
+CREATE VIEW `v_employees_job_titles` AS SELECT 
+concat(first_name, ' ', CASE WHEN middle_name is null then '' else middle_name end,' ', last_name) 
+AS full_name, job_title FROM employees;
+SELECT * FROM `v_employees_job_titles`;

@@ -1,0 +1,8 @@
+set foreign_key_checks = 0;
+
+delete from employees where department_id in
+(select d.department_id from departments as d
+where (d.name = 'Production ' or d.name = 'Production Control'));
+
+delete from departments where 
+(name = 'Production ' or name = 'Production Control') ;

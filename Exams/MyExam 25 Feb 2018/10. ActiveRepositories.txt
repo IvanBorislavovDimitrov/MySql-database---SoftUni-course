@@ -1,0 +1,5 @@
+select r.id,r.name, count(i.id) from repositories as r
+join issues as i on i.repository_id = r.id
+GROUP BY r.id
+order by count(i.id) desc, r.id
+limit 5;

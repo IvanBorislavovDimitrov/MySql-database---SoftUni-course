@@ -1,0 +1,12 @@
+delimiter $$
+create procedure usp_get_employees_salary_above(salary decimal(19, 4))
+begin
+	select e.first_name, e.last_name from employees as e
+    where e.salary >= salary
+    order by concat(e.first_name, ' ', e.last_name), e.employee_id asc;
+end $$
+delimiter ;
+
+drop procedure usp_get_employees_salary_above;
+
+call usp_get_employees_salary_above(48100);

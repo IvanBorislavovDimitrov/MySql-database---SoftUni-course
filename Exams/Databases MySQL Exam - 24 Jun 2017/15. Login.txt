@@ -1,0 +1,24 @@
+create table logged_in_users (
+	id int primary key,
+    username VARCHAR(30) not null unique,
+    password varchar(30) not null,
+    email varchar(50)
+);
+
+delimiter $$
+create procedure udp_login(username varchar(100), password varchar(100))
+begin
+	if (username not in (select u.username from users as u)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Username does not exists!';
+	elseif (password not in (select u.password from users as u where u.username = username)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password is incorrect';
+	elseif (username in (select u.username from logged_in_users as u)) then
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User is already logged in!';
+	else
+        insert into logged_in_users
+        select * from users as u where u.username = username and u.password = password;
+        end if;
+end $$
+delimiter ;
+
+call udp_login('doge', 'doge');

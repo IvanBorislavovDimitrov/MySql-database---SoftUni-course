@@ -1,0 +1,4 @@
+update chats as c 
+join messages as m on c.id = m.chat_id
+set c.start_date = (select min(m1.sent_on) from messages as m1 where c.id = m1.chat_id)
+where c.start_date > m.sent_on;

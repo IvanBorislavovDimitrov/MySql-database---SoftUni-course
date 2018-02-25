@@ -1,0 +1,14 @@
+delimiter $$
+create procedure usp_get_employees_from_town (str varchar(50))
+begin
+	select e.first_name, e.last_name from towns as t
+    join addresses as a on a.town_id = t.town_id
+	join employees as e on e.address_id = a.address_id
+    where str like (t.name)
+    order by e.first_name, e.last_name, e.employee_id;
+end $$
+delimiter ;
+
+call usp_get_employees_from_town ('Sofia');
+
+drop procedure usp_get_employees_from_town  ;

@@ -1,0 +1,10 @@
+SELECT 
+    p.id,
+    CONCAT(c.name, ' - ', con.name, ' - ', p.name) AS 'path'
+FROM
+    categories AS c
+        JOIN
+    contests AS con ON con.category_id = c.id
+        JOIN
+    problems AS p ON p.contest_id = con.id
+ORDER BY p.id ASC;

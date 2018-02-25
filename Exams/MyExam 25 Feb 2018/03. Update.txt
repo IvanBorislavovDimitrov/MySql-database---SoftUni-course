@@ -1,0 +1,12 @@
+
+set foreign_key_checks = 0;
+
+update users as u 
+right join repositories_contributors as rc on rc.contributor_id = u.id
+right join repositories as r on rc.repository_id = r.id
+set rc.repository_id = (select * from (
+select r6.id from users as u6 
+right join repositories_contributors as rc6 on rc6.contributor_id = u6.id
+right join repositories as r6 on rc6.repository_id = r6.id
+where rc6.contributor_id is null limit 1) as `alisa`)
+where u.id = r.id;

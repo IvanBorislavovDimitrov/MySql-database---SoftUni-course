@@ -1,0 +1,10 @@
+SELECT 
+    c.country_name, r.river_name
+FROM
+    countries AS c
+        JOIN
+    countries_rivers AS cr ON cr.country_code = c.country_code
+        JOIN
+    rivers AS r ON r.id = cr.river_id
+ORDER BY country_name ASC
+LIMIT 5;

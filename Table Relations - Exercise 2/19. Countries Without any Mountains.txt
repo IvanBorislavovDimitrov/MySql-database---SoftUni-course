@@ -1,0 +1,8 @@
+SELECT 
+    COUNT(*)
+FROM
+    countries AS c
+        JOIN
+    mountains_countries AS mc ON mc.country_code = c.currency_code
+WHERE
+    mountain_id IS NULL;

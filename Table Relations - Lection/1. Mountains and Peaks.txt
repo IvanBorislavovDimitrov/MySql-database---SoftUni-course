@@ -1,0 +1,11 @@
+create table mountains (
+	id int primary key auto_increment,
+    `name` varchar(50)
+);
+
+create table peaks(
+	id int primary key auto_increment,
+    `name` varchar(50),
+    `mountain_id` INT,
+    constraint fk_peaks_mountains FOREIGN KEY (`mountain_id`) REFERENCES mountains(id)
+);

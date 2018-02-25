@@ -1,0 +1,15 @@
+SELECT 
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    c.gender,
+    cit.city_name
+FROM
+    customers AS c
+        JOIN
+    cities AS cit ON c.city_id = cit.city_id
+WHERE
+    (c.first_name LIKE '%a'
+        OR c.last_name LIKE 'Bu%')
+        AND CHAR_LENGTH(cit.city_name) >= 8
+ORDER BY c.customer_id;

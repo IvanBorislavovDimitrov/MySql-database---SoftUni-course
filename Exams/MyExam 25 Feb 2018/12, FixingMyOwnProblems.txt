@@ -1,0 +1,11 @@
+select
+u.id, u.username,
+(select count(*) from users as u1
+LEFT join issues as i1 on i1.assignee_id = u1.id
+LEFT join commits as c1 on c1.issue_id = i1.id
+where c1.contributor_id = u1.id and u.id = u1.id) as ``
+
+from users as u
+LEFT join issues as i on i.assignee_id = u.id
+LEFT join commits as c on c.issue_id = i.id
+group by u.id order by `` desc, u.id;

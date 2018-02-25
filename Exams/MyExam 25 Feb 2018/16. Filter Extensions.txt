@@ -1,0 +1,12 @@
+delimiter $$
+create procedure udp_findbyextension (extension varchar(50))
+begin
+	select f.id, f.name, concat(f.size, 'KB') from files as f
+    WHERE f.name like (concat('%', extension))
+    order by f.id;
+end $$
+delimiter ;
+call udp_findbyextension('html');
+drop PROCEDURE udp_findbyextension;
+
+

@@ -1,0 +1,1 @@
+delete from locations where id not in (select location_id from users where location_id is not null);

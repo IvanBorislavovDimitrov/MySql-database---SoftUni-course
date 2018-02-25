@@ -1,0 +1,3 @@
+select f.id, f.name, f.size from files as f
+where f.size > 1000 and f.name like ('%html%')
+order by f.size desc;

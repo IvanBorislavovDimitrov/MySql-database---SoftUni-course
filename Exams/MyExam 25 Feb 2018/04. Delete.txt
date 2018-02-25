@@ -1,0 +1,2 @@
+delete from repositories where 
+id not in (select repository_id from issues);

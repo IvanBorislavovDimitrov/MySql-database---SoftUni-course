@@ -1,0 +1,17 @@
+SELECT 
+    t.ticket_id,
+    a.airport_name,
+    CONCAT(c.first_name, ' ', c.last_name)
+FROM
+    tickets AS t
+        JOIN
+    flights AS f ON t.flight_id = f.flight_id
+        JOIN
+    customers AS c ON c.customer_id = t.customer_id
+        JOIN
+    airlines AS ai ON ai.airline_id = f.airline_id
+        JOIN
+    airports AS a ON a.airport_id = f.destination_airport_id
+WHERE
+    t.price < 5000 AND t.class = 'First'
+ORDER BY t.ticket_id;

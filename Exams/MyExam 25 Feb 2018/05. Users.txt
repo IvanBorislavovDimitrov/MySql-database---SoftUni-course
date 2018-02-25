@@ -1,0 +1,2 @@
+select u.id, u.username from users as u
+order by u.id;

@@ -1,0 +1,8 @@
+delimiter $$
+create trigger deleted_messages
+after delete on messages FOR EACH ROW
+begin
+	insert INTO `messages_log` 
+    values (old.id, old.content, old.sent_on, old.chat_id, old.user_id);
+end $$
+delimiter ;

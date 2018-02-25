@@ -1,0 +1,2 @@
+select e.employee_id, e.hire_date, e.salary, e.branch_id from employees as e
+where e.salary > 2000 and e.hire_date > '2009-06-15';

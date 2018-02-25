@@ -1,0 +1,11 @@
+delimiter $$
+CREATE PROCEDURE usp_get_holders_full_name () 
+BEGIN
+	select concat(first_name, ' ', last_name) from account_holders as ah
+    order by concat(first_name, ' ', last_name);
+END $$
+delimiter ;
+
+call ufn_count_employees_by_town;
+
+drop procedure ufn_count_employees_by_town;

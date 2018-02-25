@@ -1,0 +1,9 @@
+SELECT 
+    AVG(salary)
+FROM
+    employees AS e
+        JOIN
+    departments AS d ON d.department_id = e.department_id
+GROUP BY d.name
+ORDER BY AVG(salary) ASC
+LIMIT 1;

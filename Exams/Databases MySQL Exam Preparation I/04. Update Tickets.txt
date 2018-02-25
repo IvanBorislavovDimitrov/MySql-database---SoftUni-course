@@ -1,0 +1,14 @@
+UPDATE airlines AS a
+        JOIN
+    flights AS f ON f.airline_id = a.airline_id
+        JOIN
+    tickets AS t ON t.flight_id = f.flight_id 
+SET 
+    t.price = t.price * 1.5
+WHERE
+    a.airline_id = (SELECT 
+            a1.airline_id
+        FROM
+            airlines AS a1
+        ORDER BY a1.rating DESC
+        LIMIT 1);

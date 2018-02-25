@@ -1,0 +1,11 @@
+create table authors (
+	id int primary key auto_increment,
+    `name` varchar(50)
+);
+
+create table books (
+	id int PRIMARY key AUTO_INCREMENT,
+    `name` varchar(50),
+    author_id int,
+    constraint fk_books_authors FOREIGN KEY (author_id) REFERENCES authors(id) on delete cascade
+);

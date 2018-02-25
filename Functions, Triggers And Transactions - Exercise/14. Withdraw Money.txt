@@ -1,0 +1,13 @@
+create procedure usp_withdraw_money(account_id int, money_amount decimal(19,4))
+begin
+	if (money_amount < 0) then rollback;
+     
+    elseif ((select a.balance from accounts as a
+        where a.id = account_id) - money_amount < 0) then rollback;
+	else
+		update accounts set balance = balance - money_amount where id = account_id;
+		
+        
+    end if;
+    
+end

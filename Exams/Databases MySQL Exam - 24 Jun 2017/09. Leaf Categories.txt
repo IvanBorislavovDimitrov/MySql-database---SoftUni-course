@@ -1,0 +1,9 @@
+SELECT 
+    c.id, c.name
+FROM
+    categories AS c
+        LEFT JOIN
+    categories AS c1 ON c.id = c1.parent_id
+WHERE
+    c1.id IS NULL
+ORDER BY c.name , c.id;

@@ -1,0 +1,4 @@
+select c.title, c.is_active from chats as c
+where (c.is_active = 0 and char_length(c.title) < 5) or ((substring(c.title, 3, 1) = 't' and
+														substring(c.title, 4, 1) = 'l'))
+order by c.title desc;

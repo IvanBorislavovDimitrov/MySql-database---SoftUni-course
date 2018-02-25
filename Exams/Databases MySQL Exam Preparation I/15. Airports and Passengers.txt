@@ -1,0 +1,13 @@
+SELECT 
+    a.airport_id, a.airport_name, COUNT(*)
+FROM
+    flights AS f
+        JOIN
+    tickets AS t ON t.flight_id = f.flight_id
+        JOIN
+    airports AS a ON f.origin_airport_id = a.airport_id
+        JOIN
+    customers AS c ON c.customer_id = t.customer_id
+    where f.status = 'Departing'
+GROUP BY a.airport_id
+having count(*) > 0;

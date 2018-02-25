@@ -1,0 +1,6 @@
+SELECT 
+    ABS(SUM(g1.deposit_amount - g2.deposit_amount)) AS 'a'
+FROM
+    wizzard_deposits g1
+        INNER JOIN
+    wizzard_deposits g2 ON g2.id = g1.id + 1;

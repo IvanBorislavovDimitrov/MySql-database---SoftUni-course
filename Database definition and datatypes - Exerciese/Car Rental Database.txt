@@ -1,0 +1,84 @@
+
+
+CREATE TABLE categories (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	category VARCHAR(50) NOT NULL,
+	daily_rate DECIMAL(8,2),
+	weekly_rate DECIMAL(8,2),
+	monthly_rate DECIMAL(8,2),
+	weekend_rate DECIMAL(8,2)
+);
+
+INSERT INTO categories
+	(id, category, daily_rate, weekly_rate, monthly_rate, weekend_rate)
+	VALUES (NULL, '', 0, 0, 0, 0), (NULL, '', 0, 0, 0, 0), (NULL, '', 0, 0, 0, 0);
+
+CREATE TABLE cars (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	plate_number VARCHAR(100) NOT NULL,
+	make VARCHAR(100) NOT NULL,
+	model VARCHAR(100) NOT NULL,
+	car_year DATE NOT NULL,
+	category_id INT NOT NULL,
+	doors INT NOT NULL,
+	picture BLOB,
+	car_condition VARCHAR(50) NOT NULL,
+	available CHAR
+);
+
+INSERT INTO cars
+	(id, plate_number, make, model, car_year, category_id, doors, picture, car_condition, available)
+	VALUES (NULL, '', '', '', '1999-10-10', 1, 0, NULL, '', ''), 
+	(NULL, '', '', '', '1999-10-10', 1, 0, NULL, '', ''), (NULL, '', '', '', '1999-10-10', 1, 0, NULL, '', '');
+
+
+CREATE TABLE employees (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	notes VARCHAR(100)
+);
+
+INSERT INTO employees
+	(id, first_name, last_name, title, notes)
+	VALUES (NULL, '', '', '', ''), (NULL, '', '', '', ''), (NULL, '', '', '', '');
+
+CREATE TABLE customers (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	driver_licence_number VARCHAR(100) NOT NULL,
+	full_name VARCHAR(100) NOT NULL,
+	address VARCHAR(100) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+	zip_code INT(11) NOT NULL,
+	notes VARCHAR(100)
+);
+
+INSERT INTO customers
+	(id, driver_licence_number, full_name, address, city, zip_code, notes)
+	VALUES (NULL, '', '', '', '', 0, ''), (NULL, '', '', '', '', 0, ''), (NULL, '', '', '', '', 0, '');
+	
+CREATE TABLE rental_orders (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	employee_id INT NOT NULL,
+	customer_id INT NOT NULL,
+	car_id INT NOT NULL,
+	car_condition VARCHAR(50) NOT NULL,
+	tank_level INT NOT NULL,
+	kilometrage_start INT NOT NULL,
+	kilometrage_end INT NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+	total_days INT NOT NULL,
+	rate_applied DOUBLE(4,2) NOT NULL,
+	tax_rate DOUBLE(4,2) NOT NULL,
+	order_status CHAR NOT NULL,
+	notes VARCHAR(100)
+);
+
+INSERT INTO rental_orders
+	(id, employee_id, customer_id, car_id, car_condition, tank_level, kilometrage_start, kilometrage_end, start_date, end_date, total_days, rate_applied, tax_rate, order_status, notes)
+	VALUES (NULL, 1, 1, 1, '', 1, 1, 1, '1999-10-10', '1999-10-10', 1, 1, 1, '', ''), 
+	(NULL, 1, 1, 1, '', 1, 1, 1, '1999-10-10', '1999-10-10', 1, 1, 1, '', ''),
+	 (NULL, 1, 1, 1, '', 1, 1, 1, '1999-10-10', '1999-10-10', 1, 1, 1, '', '');
+

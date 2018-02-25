@@ -1,0 +1,12 @@
+SELECT DISTINCT
+    c.name
+FROM
+    users AS u
+        JOIN
+    reports AS r ON r.user_id = u.id
+        JOIN
+    categories AS c ON r.category_id = c.id
+WHERE
+    DAY(u.birthdate) = DAY(r.open_date)
+        AND MONTH(u.birthdate) = MONTH(r.open_date)
+ORDER BY c.name;

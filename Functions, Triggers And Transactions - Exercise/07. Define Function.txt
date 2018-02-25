@@ -1,0 +1,13 @@
+delimiter $$
+CREATE function ufn_is_word_comprised(set_of_letters varchar(50), word varchar(50))  
+returns	 bit
+BEGIN
+	return word REGEXP(concat('^[',set_of_letters,']+$'));
+END $$
+delimiter ;
+
+drop procedure usp_get_employees_by_salary_level;
+
+
+call usp_get_employees_by_salary_level('High')
+

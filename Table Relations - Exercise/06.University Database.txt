@@ -1,0 +1,36 @@
+create table subjects (
+	subject_id int primary key,
+    subject_name varchar(50)
+);
+
+create table agenda (
+	student_id int,
+    subject_id int,
+    primary key(student_id, subject_id)
+);
+
+create table students (
+	student_id int primary key,
+    student_number varchar(12),
+    student_name varchar(50),
+    major_id int
+);
+
+create table payments (
+	payment_id int primary key,
+    payment_date date,
+    payment_amount DECIMAL(8, 2),
+    student_id int
+);
+
+create table majors (
+	major_id int primary key,
+    `name` varchar(50)
+);
+
+alter table agenda add constraint fk_agenda_student FOREIGN KEY (student_id) references students(student_id),
+add constraint fk_agenda_students foreign key (subject_id) REFERENCES subjects(subject_id);
+
+alter table students add constraint fk_students_majors FOREIGN KEY (major_id) references majors(major_id); 
+
+alter table payments add constraint fk_payments_students FOREIGN KEY (student_id) references students(student_id);

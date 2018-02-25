@@ -1,0 +1,47 @@
+create table locations (
+	id int primary key unique,
+    latitude float,
+    longitude float
+);
+
+create table credentials (
+	id int primary key UNIQUE,
+    email varchar(30),
+    `password` varchar(20) 
+);
+
+create table users (
+	id int primary key UNIQUE,
+    nickname varchar(25),
+    gender char(1),
+    age int,
+    location_id int,
+    credential_id int unique,
+    constraint fk_users_locations foreign key (location_id) references locations(id),
+    constraint fk_users_credentials foreign key (credential_id) references credentials(id)
+);
+
+create table chats (
+	id int primary key UNIQUE,
+    title varchar(32),
+    start_date date,
+    is_active bit
+);
+
+create table messages (
+	id int primary key unique,
+	content varchar(200),
+    sent_on date,
+    chat_id int,
+    user_id int,
+    constraint fk_messages_chats foreign key (chat_id) references chats(id),
+    constraint fk_messages_users foreign key (user_id) references users(id)
+);
+
+create table users_chats (
+	user_id int,
+    chat_id int,
+    primary key(user_id, chat_id),
+    constraint fk_users_chats_users foreign key (user_id) references users(id),
+    constraint fk_users_chats_chats foreign key (chat_id) references chats(id)
+);

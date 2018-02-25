@@ -1,0 +1,3 @@
+select u.nickname, u.gender, u.age from users as u
+where u.age between 22 and 37
+order by u.id;

@@ -1,0 +1,10 @@
+SELECT 
+    c.id, c.title, m.id
+FROM
+    messages AS m
+        JOIN
+    chats AS c ON c.id = m.chat_id
+WHERE
+    sent_on < '2012-03-26'
+        AND c.title LIKE ('%x')
+ORDER BY c.id , m.id;

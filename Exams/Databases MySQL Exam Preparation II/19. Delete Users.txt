@@ -1,0 +1,18 @@
+create table users_log (
+	id int primary key,
+    nickname varchar(50),
+    gender char(1),
+    age int,
+    location_id int,
+    credential_id int
+);
+
+delimiter $$
+create trigger deleted_users
+after delete on users FOR EACH ROW
+begin
+	insert INTO `users_log` 
+    values (old.id, old.nickname, old.gender, old.age, old.location_id, old.credential_id);
+end $$
+delimiter ;
+

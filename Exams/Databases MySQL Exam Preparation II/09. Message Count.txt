@@ -1,0 +1,13 @@
+SELECT 
+    c.id,
+    (SELECT 
+            COUNT(*)
+        FROM
+            messages AS m1
+        WHERE
+			m1.chat_id is not null and m1.id is not null and
+            m1.chat_id = c.id AND m1.id < 90) AS `total_messages`
+FROM
+    chats AS c
+ORDER BY `total_messages` DESC , c.id ASC
+LIMIT 5;

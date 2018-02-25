@@ -1,0 +1,42 @@
+create table items (
+	item_id int primary key,
+    `name` varchar(50),
+    item_type_id INT
+);
+
+create table item_types(
+	item_type_id int primary key,
+    `name` varchar(50)
+);
+
+create table order_items (
+	order_id int,
+    item_id int,
+    primary key (order_id, item_id)
+);
+
+create table orders (
+	order_id int primary key,
+    customer_id INT
+);
+
+create table customers (
+	customer_id int primary key,
+    `name` varchar(50),
+    birthday date,
+    city_id int
+);
+
+create table cities (
+	city_id int primary key,
+    `name` varchar(50)
+);
+
+alter table items add constraint fk_items_item_types foreign key (item_type_id) references item_types(item_type_id);
+
+alter table order_items add constraint fk_order_items_orders foreign key (order_id) references orders(order_id), 
+add constraint fk_order_items_items foreign key (item_id) references items(item_id);
+
+alter table orders add constraint fk_orders_customers FOREIGN KEY (customer_id) references customers(customer_id);
+
+alter table customers add constraint fk_customers_cities FOREIGN KEY (city_id) REFERENCES cities(city_id);

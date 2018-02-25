@@ -1,0 +1,8 @@
+select r.open_date, r.description, u.email from reports as r
+join users as u on u.id = r.user_id
+join categories as c on c.id = r.category_id
+join departments as d on d.id = c.department_id
+where r.close_date is null and char_length(description) > 20 and
+(description like ('%str%'))
+and (d.name='Infrastructure' or d.name='Emergency' or d.name = 'Roads Maintenance')
+order by open_date, email, u.email

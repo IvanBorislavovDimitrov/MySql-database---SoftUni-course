@@ -1,0 +1,18 @@
+select d.name, c.name,
+round((select count(c1.name) from categories as c1 join departments as d1 on d1.id = c1.department_id
+join reports as r1 on r1.category_id = c1.id 
+where c.id = c1.id
+group by c.name
+order by d1.name)
+/ 
+(select count(c1.name) from categories as c1 join departments as d1 on d1.id = c1.department_id
+join reports as r1 on r1.category_id = c1.id 
+where d.id = d1.id
+group by c.name
+order by d1.name) * 100) as `percentage`
+
+from reports as r
+join categories as c on c.id = r.category_id
+join departments as d on d.id = c.department_id
+group by c.name, d.name
+order by d.name, c.name, `percentage` desc;

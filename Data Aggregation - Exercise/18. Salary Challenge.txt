@@ -1,0 +1,14 @@
+SELECT 
+    first_name, last_name, department_id
+FROM
+    employees AS e
+WHERE
+    e.salary >= (SELECT 
+            AVG(salary)
+        FROM
+            employees AS e1
+        WHERE
+            e1.department_id = e.department_id
+        GROUP BY e1.department_id)
+ORDER BY e.department_id , e.employee_id
+LIMIT 10;

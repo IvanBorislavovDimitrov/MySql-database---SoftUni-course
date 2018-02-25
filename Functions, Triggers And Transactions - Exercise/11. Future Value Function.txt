@@ -1,0 +1,14 @@
+delimiter $$
+CREATE function ufn_calculate_future_value(`i` double, `r` double, `t` double) 
+returns double
+BEGIN
+	declare result double;
+    set result := `i` * POW((1 + `r`), `t`);
+    RETURN round(result,2);
+END $$
+delimiter ;
+
+select ufn_calculate_future_value(1000, 0.1, 5);
+
+drop function ufn_calculate_future_value;
+

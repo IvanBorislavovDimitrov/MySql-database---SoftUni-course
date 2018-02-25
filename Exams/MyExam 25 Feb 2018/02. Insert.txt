@@ -1,0 +1,12 @@
+insert into issues 
+select 
+null,
+concat('Critical Problem With ', f.name),
+'open',
+ceil(f.id * 2 / 3),
+u.id
+
+from files as f
+join commits as c on c.id = f.commit_id
+join users as u on u.id = c.contributor_id
+where f.id between 46 and 50;

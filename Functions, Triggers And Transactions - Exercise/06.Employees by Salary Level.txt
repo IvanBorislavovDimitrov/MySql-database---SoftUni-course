@@ -1,0 +1,20 @@
+delimiter $$
+CREATE procedure usp_get_employees_by_salary_level (salary_level varchar(50))
+BEGIN
+    
+    select e.first_name, e.last_name from employees as e
+		WHERE 
+			CASE 
+				WHEN salary_level = 'Low' and (e.salary < 30000) then true
+				WHEN salary_level = 'Average' and (e.salary between 30000 and 50000) then true
+				WHEN salary_level = 'High' and (e.salary > 50000) then true
+			END
+		order by e.first_name desc, e.last_name desc;
+END $$
+delimiter ;
+
+drop procedure usp_get_employees_by_salary_level;
+
+
+call usp_get_employees_by_salary_level('High')
+

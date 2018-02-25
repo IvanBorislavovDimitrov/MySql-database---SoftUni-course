@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM products AS p WHERE p.price > 8 GROUP BY category_id HAVING category_id=2;

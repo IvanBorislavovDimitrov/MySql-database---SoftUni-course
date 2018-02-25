@@ -1,0 +1,9 @@
+SELECT 
+    *
+FROM
+    towns
+WHERE
+    SUBSTRING(`name`, 1, 1) = 'm'
+        OR SUBSTRING(`name`, 1, 1) = 'k'
+        OR SUBSTRING(`name`, 1, 1) = 'b'
+        OR SUBSTRING(`name`, 1, 1) = 'e' ORDER BY `name` ASC;

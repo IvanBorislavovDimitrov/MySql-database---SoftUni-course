@@ -1,0 +1,5 @@
+select r.id, u.id from repositories as r
+join repositories_contributors as rc on rc.repository_id = r.id
+join users as u on u.id = rc.contributor_id
+where r.id = u.id
+order by r.id;

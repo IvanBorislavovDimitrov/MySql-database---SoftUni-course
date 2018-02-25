@@ -1,0 +1,18 @@
+SELECT DISTINCT
+    c.customer_id,
+    CONCAT(c.first_name, ' ', c.last_name),
+    t1.town_name
+FROM
+    customers AS c
+        JOIN
+    tickets AS t ON t.customer_id = c.customer_id
+        JOIN
+    flights AS f ON f.flight_id = t.flight_id
+        JOIN
+    airports AS a ON a.airport_id = f.origin_airport_id
+        JOIN
+    towns AS t1 ON t1.town_id = a.town_id
+WHERE
+    c.home_town_id = a.town_id
+        AND f.status = 'Departing'
+ORDER BY c.customer_id;

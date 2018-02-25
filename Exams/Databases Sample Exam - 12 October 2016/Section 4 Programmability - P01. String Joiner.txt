@@ -1,0 +1,16 @@
+delimiter $$
+
+create function udf_concat_string  (s1 varchar(5000), s2 varchar(5000))
+returns varchar(10000)
+begin
+
+	declare str varchar(10000);
+    set str := concat(reverse(s1), reverse(s2));
+    return str;
+
+end $$
+delimiter ;
+
+drop FUNCTION udf_concat_string;
+
+select udf_concat_string('pak ', 'biri');

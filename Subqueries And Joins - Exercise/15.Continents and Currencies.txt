@@ -1,0 +1,27 @@
+SELECT 
+    con.continent_code,
+    (SELECT 
+            c1.currency_code
+        FROM
+            countries AS c1
+        WHERE
+            con.continent_code = c1.continent_code
+        GROUP BY c1.currency_code
+        ORDER BY COUNT(*) DESC
+        LIMIT 1) AS `most_user_currency_code`,
+    (SELECT 
+            COUNT(*)
+        FROM
+            countries AS c2
+        WHERE
+            con.continent_code = c2.continent_code
+        GROUP BY c2.currency_code
+        ORDER BY COUNT(*) DESC
+        LIMIT 1) AS `most_user_currency_count`
+FROM
+    countries AS con
+GROUP BY `most_user_currency_code` , continent_code
+HAVING `most_user_currency_count` > 1
+ORDER BY con.continent_code , most_user_currency_code;
+
+

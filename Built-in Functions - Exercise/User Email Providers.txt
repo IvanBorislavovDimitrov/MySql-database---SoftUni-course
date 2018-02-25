@@ -1,0 +1,1 @@
+SELECT user_name, SUBSTRING(email, locate('@', email)+1) AS email FROM users ORDER BY SUBSTRING(email, locate('@', email)+1) ASC, user_name;

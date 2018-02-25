@@ -1,0 +1,15 @@
+SET FOREIGN_KEY_CHECKS=0;
+insert into messages(id, content, sent_on, chat_id, user_id)
+select 
+null,
+concat(u.age, '-', u.gender, '-', l.latitude, '-', l.longitude),
+'2016-12-15',
+case 
+	when u.gender = 'F' then ceil(sqrt(u.age * 2.0))
+    when u.gender = 'M' then ceil(pow(u.age / 18.0, 3))
+end,
+u.id
+from users as u
+join locations as l on l.id = u.location_id
+where u.id >= 10 and u.id <= 20;
+SET FOREIGN_KEY_CHECKS=1;

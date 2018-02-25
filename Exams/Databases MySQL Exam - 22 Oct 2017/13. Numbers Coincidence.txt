@@ -1,0 +1,12 @@
+SELECT DISTINCT
+    u.username
+FROM
+    users AS u
+        JOIN
+    reports AS r ON u.id = r.user_id
+        JOIN
+    categories AS c ON c.id = r.category_id
+WHERE
+    SUBSTRING(u.username, 1, 1) = cast(category_id as char(50))
+        OR RIGHT(u.username, 1) = cast(category_id as char(50))
+ORDER BY username;

@@ -1,0 +1,7 @@
+set foreign_key_checks=0;
+create trigger tr 
+after delete on accounts for each row
+begin
+	insert into Accoun_Logs(account_id, account_number,start_date,customer_id)
+    values (old.account_id, old.account_number, old.start_date, old.customer_id);
+end 

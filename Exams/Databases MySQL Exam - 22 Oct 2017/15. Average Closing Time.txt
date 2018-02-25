@@ -1,0 +1,12 @@
+SELECT 
+    d.name,
+		if (avg(datediff(r.close_date , r.open_date)) is null, 'no info', 
+        cast(floor(avg(datediff(r.close_date , r.open_date)))  as char))   AS 'avg_dur'
+FROM
+    departments AS d
+        JOIN
+    categories AS c ON c.department_id = d.id
+        JOIN
+    reports AS r ON r.category_id = c.id
+GROUP BY d.name
+order by d.name;

@@ -1,0 +1,7 @@
+SELECT 
+    a.airline_id, a.airline_name, a.nationality, a.rating
+FROM
+    airlines AS a
+    where a.airline_id in (select f.airline_id from flights as f)
+ORDER BY a.rating desc, a.airline_id
+LIMIT 5;

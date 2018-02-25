@@ -1,0 +1,6 @@
+insert into submissions(passed_tests,problem_id,user_id)
+select ceil(sqrt(pow(length(p.name), 3)) - length(p.name)),
+p.id,
+ceil(p.id * 3) / 2
+from problems as p
+where p.id between 1 and 10;

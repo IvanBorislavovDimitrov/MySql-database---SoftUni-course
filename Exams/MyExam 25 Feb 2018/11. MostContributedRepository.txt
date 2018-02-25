@@ -1,0 +1,12 @@
+select r.id,
+r.name,
+(select count(distinct c1.contributor_id) from commits as c1
+where c1.contributor_id = u.id) as `commits`, 
+
+count(u.id)
+from users as u
+
+join repositories_contributors as rc on rc.contributor_id = u.id
+join repositories as r on r.id = rc.repository_id
+group by r.id
+order by count(u.id) desc, r.id limit 1;

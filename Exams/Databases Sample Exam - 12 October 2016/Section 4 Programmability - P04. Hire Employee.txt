@@ -1,0 +1,5 @@
+create trigger tr 
+after insert on employees for each row
+begin
+	update employees_loans set employee_id = new.employee_id where employee_id = new.employee_id - 1;
+end 

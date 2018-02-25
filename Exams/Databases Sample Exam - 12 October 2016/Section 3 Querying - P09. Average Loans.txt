@@ -1,0 +1,9 @@
+
+
+select c.customer_id,l.amount from customers as c
+join loans as l on l.customer_id = c.customer_id
+where l.amount >= (select avg(l1.amount) from loans as l1
+left join customers as c1 on c1.customer_id = l1.customer_id where c1.gender = 'M')
+order by c.last_name asc
+limit 5;
+

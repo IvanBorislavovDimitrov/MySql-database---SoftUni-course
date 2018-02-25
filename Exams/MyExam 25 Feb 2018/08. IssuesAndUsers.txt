@@ -1,0 +1,6 @@
+select 
+i.id,
+concat(u.username, ' : ', i.title)
+ from users as u
+join issues as i on i.assignee_id = u.id
+order by i.id desc;

@@ -1,0 +1,62 @@
+SET foreign_key_checks = 0;
+
+create table DepositTypes (
+	DepositTypeID int primary key,
+    Name varchar(20)
+);
+
+create table Deposits (
+	DepositID int primary key,
+    Amount decimal(10,2),
+    StartDate date,
+    Enddate date,
+    DepositTypeID int,
+    CustomerID int,
+    constraint fk_deposits_deposit_types 
+    FOREIGN KEY (DepositTypeID) REFERENCES DepositTypes(DepositTypeID),
+    constraint fk_deposit_customers FOREIGN KEY (CustomerID)
+    REFERENCES customers(customer_id)
+);
+
+create table EmployeesDeposits (
+	EmployeeID int,
+    DepositID int,
+    primary key(EmployeeID, DepositID),
+    constraint fk_EmployeesDeposits_employees
+    FOREIGN KEY (EmployeeID) REFERENCES employees(employee_id),
+    
+    constraint fk_EmployeesDeposits_Deposits FOREIGN KEY (DepositID)
+    REFERENCES Deposits(DepositID)
+);
+
+create table CreditHistory (
+	CreditHistoryID int primary key,
+    Mark varchar(1),
+    StartDate date,
+    EndDate date,
+    CustomerID int,
+    constraint fk_CreditHistory_customers FOREIGN KEY (CustomerID)
+    REFERENCES customers(customer_id)
+);
+
+create table Payments (
+	PayementID int primary key,
+    `Date` date,
+    Amount decimal(10,2),
+    LoanID int,
+	constraint fk_Payments_loans FOREIGN KEY (LoanID)
+    REFERENCES loans(loan_id)
+);
+
+create table Users (
+	UserID int primary key,
+    UserName varchar(20),
+    Password varchar(20),
+    CustomerId int unique,
+    constraint fk_Users_customers FOREIGN KEY (CustomerID)
+    REFERENCES customers(customer_id)
+);
+
+alter table employees add COLUMN ManagerID int,
+add CONSTRAINT fk_employees_employees FOREIGN KEY 
+(ManagerID) REFERENCES employees(employee_id);
